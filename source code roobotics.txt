@@ -1,4 +1,4 @@
-Write Python code to test motors 
+*Write Python code to test motors 
 import RPi.GPIO as GPIO
 import time
 GPIO.setmode(GPIO.BOARD)
@@ -20,7 +20,8 @@ while(1):
 		GPIO.output(DC_MOTOR_a, GPIO.LOW)
 		GPIO.output(DC_MOTOR_b, GPIO.HIGH)		
 		time.sleep(0.1)
-Write a script to follow a predetermined path 
+
+*Write a script to follow a predetermined path 
 const int pingPin = 7;
 const int red=11;
 const int blue=10;
@@ -96,7 +97,7 @@ long microsecondsToCentimeters(long microseconds) {
   return microseconds / 29 / 2;
 }
 
-Develop Python code for testing the sensors
+*Develop Python code for testing the sensors
 int pirsensor = 0;
 
 void setup()
@@ -125,7 +126,7 @@ void loop()
   delay(10); // Delay a little bit to improve simulation performance
 }
 
-Add pan and tilt service to the robot object and test it
+*Add pan and tilt service to the robot object and test it
 #include <Servo.h>
 int sensorValue = 0;
 int outputValue = 0;
@@ -152,7 +153,7 @@ void loop()
   delay(10); // Delay a little bit to improve simulation performance
 }
 
-Create an obstacle avoidance behaviour for robot and test it.
+*Create an obstacle avoidance behaviour for robot and test it.
 //code for obstacle avoiding robot
 #include <LiquidCrystal.h>
 LiquidCrystal lcd(8,9,10,11,12,13);
@@ -276,7 +277,7 @@ lcd.setCursor(0,1);
   digitalWrite(rm2,LOW);
 }
 
-Detect faces with Haar cascades
+*Detect faces with Haar cascades
 import cv2
 from google.colab.patches import cv2_imshow
 img = cv2.imread('test.jpg')
@@ -290,3 +291,4 @@ for (x, y, w, h) in faces_rect:
 for (ex, ey, ew, eh) in eyes:
     cv2.rectangle(img, (ex, ey), (ex+ew, ey+eh), (0, 255, 0), 2)
 cv2_imshow(img)
+
