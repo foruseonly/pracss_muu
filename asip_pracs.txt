@@ -1,0 +1,199 @@
+
+================ ASIP PRACTICAL PYTHON CODES =================
+
+================ PRACTICAL 1 =================
+# Upsampling, Downsampling and FFT
+# Required Libraries: numpy, matplotlib, scipy
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.fft import fft
+
+t = np.linspace(0, 1, 100)
+signal = np.sin(2 * np.pi * 5 * t)
+
+upsampled = np.repeat(signal, 2)
+downsampled = signal[::2]
+freq = np.abs(fft(signal))
+
+plt.figure(figsize=(10,6))
+plt.subplot(3,1,1); plt.plot(signal); plt.title("Original Signal")
+plt.subplot(3,1,2); plt.plot(upsampled); plt.title("Upsampled Signal")
+plt.subplot(3,1,3); plt.plot(freq); plt.title("FFT")
+plt.show()
+
+
+================ PRACTICAL 2 =================
+# Triangular Signal and Correlation
+# Required Libraries: numpy, matplotlib
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+t = np.linspace(-1, 1, 100)
+tri = 1 - np.abs(t)
+seg = tri[20:60]
+corr = np.correlate(tri, seg, mode='full')
+
+plt.figure(figsize=(10,5))
+plt.subplot(3,1,1); plt.plot(tri); plt.title("Triangular Signal")
+plt.subplot(3,1,2); plt.plot(seg); plt.title("Segment")
+plt.subplot(3,1,3); plt.plot(corr); plt.title("Correlation")
+plt.show()
+
+
+================ PRACTICAL 3 =================
+# Convolution and Template Matching
+# Required Libraries: cv2, numpy, matplotlib
+
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+img = cv2.imread('image.jpg', 0)
+kernel = np.ones((3,3))/9
+conv = cv2.filter2D(img, -1, kernel)
+template = img[50:100, 50:100]
+res = cv2.matchTemplate(img, template, cv2.TM_CCOEFF)
+
+plt.subplot(1,2,1); plt.imshow(conv, cmap='gray'); plt.title("Convolution")
+plt.subplot(1,2,2); plt.imshow(res, cmap='gray'); plt.title("Template Matching")
+plt.show()
+
+
+================ PRACTICAL 4 =================
+# Intensity Transformations
+# Required Libraries: cv2, numpy, matplotlib
+
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+img = cv2.imread('image.jpg', 0)
+log_img = np.log1p(img)
+gamma_img = np.power(img/255, 0.5)
+hist_eq = cv2.equalizeHist(img)
+
+plt.subplot(2,2,1); plt.imshow(log_img, cmap='gray'); plt.title("Log")
+plt.subplot(2,2,2); plt.imshow(gamma_img, cmap='gray'); plt.title("Gamma")
+plt.subplot(2,2,3); plt.imshow(hist_eq, cmap='gray'); plt.title("Histogram Equalization")
+plt.show()
+
+
+================ PRACTICAL 5 =================
+# Gradient and Laplacian
+# Required Libraries: cv2, matplotlib
+
+import cv2
+import matplotlib.pyplot as plt
+
+img = cv2.imread('image.jpg', 0)
+sobel = cv2.Sobel(img, cv2.CV_64F, 1, 0)
+laplacian = cv2.Laplacian(img, cv2.CV_64F)
+
+plt.subplot(1,2,1); plt.imshow(sobel, cmap='gray'); plt.title("Gradient")
+plt.subplot(1,2,2); plt.imshow(laplacian, cmap='gray'); plt.title("Laplacian")
+plt.show()
+
+
+================ PRACTICAL 6 =================
+# Linear and Nonlinear Noise Smoothing
+# Required Libraries: cv2, matplotlib
+
+import cv2
+import matplotlib.pyplot as plt
+
+img = cv2.imread('image.jpg', 0)
+mean = cv2.blur(img, (5,5))
+median = cv2.medianBlur(img, 5)
+
+plt.subplot(1,2,1); plt.imshow(mean, cmap='gray'); plt.title("Mean Filter")
+plt.subplot(1,2,2); plt.imshow(median, cmap='gray'); plt.title("Median Filter")
+plt.show()
+
+
+================ PRACTICAL 7 =================
+# Smoothing, Sharpening and Unsharp Masking
+# Required Libraries: cv2, numpy, matplotlib
+
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+img = cv2.imread('image.jpg', 0)
+blur = cv2.GaussianBlur(img, (5,5), 0)
+sharpen = cv2.addWeighted(img, 1.5, blur, -0.5, 0)
+
+plt.subplot(1,2,1); plt.imshow(blur, cmap='gray'); plt.title("Smoothing")
+plt.subplot(1,2,2); plt.imshow(sharpen, cmap='gray'); plt.title("Sharpening")
+plt.show()
+
+
+================ PRACTICAL 8 =================
+# Edge Detection using Sobel and Canny
+# Required Libraries: cv2, matplotlib
+
+import cv2
+import matplotlib.pyplot as plt
+
+img = cv2.imread('image.jpg', 0)
+sobel = cv2.Sobel(img, cv2.CV_64F, 1, 1)
+canny = cv2.Canny(img, 100, 200)
+
+plt.subplot(1,2,1); plt.imshow(sobel, cmap='gray'); plt.title("Sobel")
+plt.subplot(1,2,2); plt.imshow(canny, cmap='gray'); plt.title("Canny")
+plt.show()
+
+
+================ PRACTICAL 9 =================
+# Morphological Operations
+# Required Libraries: cv2, matplotlib
+
+import cv2
+import matplotlib.pyplot as plt
+
+img = cv2.imread('image.jpg', 0)
+_, binary = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
+
+erosion = cv2.erode(binary, kernel)
+dilation = cv2.dilate(binary, kernel)
+
+plt.subplot(1,2,1); plt.imshow(erosion, cmap='gray'); plt.title("Erosion")
+plt.subplot(1,2,2); plt.imshow(dilation, cmap='gray'); plt.title("Dilation")
+plt.show()
+
+
+================ PRACTICAL 10 =================
+# Feature Extraction using HOG
+# Required Libraries: cv2, skimage, matplotlib
+
+from skimage.feature import hog
+import cv2
+import matplotlib.pyplot as plt
+
+img = cv2.imread('image.jpg', 0)
+features, hog_img = hog(img, visualize=True)
+
+plt.imshow(hog_img, cmap='gray')
+plt.title("HOG Features")
+plt.show()
+
+
+================ PRACTICAL 11 =================
+# Segmentation (Edge based and Line detection)
+# Required Libraries: cv2, numpy, matplotlib
+
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+img = cv2.imread('image.jpg', 0)
+edges = cv2.Canny(img, 50, 150)
+lines = cv2.HoughLines(edges, 1, np.pi/180, 200)
+
+plt.imshow(edges, cmap='gray')
+plt.title("Edge Based Segmentation")
+plt.show()
+
+================ END OF FILE =================
